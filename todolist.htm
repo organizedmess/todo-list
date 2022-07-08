@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Smooch&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Smooch&family=Yellowtail&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Smooch&family=Staatliches&family=Yellowtail&display=swap" rel="stylesheet"> 
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Todolist</title>
+</head>
+<style>
+.text{
+    font-family: smooch;
+    font-size:50px;
+    color:cornsilk;
+    text-shadow: -4px -4px 4px rgba(0,0,0,.3);
+}
+.pro{
+    display:block;
+    float:left;
+    margin:30px;
+    font-weight: 20px;
+}
+nav{
+    margin:-8px;
+    background-color:indianred ;
+    width:100vw;
+    height:12vh;
+    box-shadow: 0px 4px 6px 3px rgba(0,0,0,.3);
+}
+.cheese{
+    margin-right: 20px;
+    float:right;
+    font-family:Yellowtail;
+    font-size:30px;
+    color:cornsilk
+}
+#home{
+  float:right;
+  margin-top: 56px;
+  margin-right: -188px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 25px;
+  color:cornsilk;
+  font-family: Staatliches;
+}
+.name{
+    margin-top:35px; 
+    box-shadow: 0px 4px 6px 3px rgba(221, 119, 119, 0.58);
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right:150px;
+}
+.name2{
+    margin-left: 290px;
+    margin-top:20px;
+    box-shadow: 0px 4px 6px 3px rgba(221, 119, 119, 0.58);
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#tablee{
+    margin-top:55px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:rgba(221, 119, 119, 0.58);
+}
+.delete{
+    background-color: rgba(221, 119, 119, 0.58);
+    color:white;
+    border-radius:11px;
+    border-width:1px;
+    width:59px;
+    font-size: 14px;
+    }
+.one{
+    color:cornsilk;
+}
+a:hover{
+    color:crimson;
+}
+#add{
+    margin-left: 1080px;
+    margin-top: 23px;
+    border-radius: 8px;
+    background-color: darksalmon;
+    color: cornsilk;
+
+}
+</style>
+<body>
+    <nav>
+        <div class="pro">
+           <h class="text"> PROCAST </h>
+        </div>
+        <div class="cheese">
+            Your To Do For Today
+        </div>
+        <div id="home">
+            <a href="#" class="one" style="text-decoration: none;"  target="self">Home</a>
+            <a href="#" class="one" style="text-decoration: none;" target="self">About</a>
+            <a href="#" class="one" style="text-decoration: none;" target="self">Contact</a>
+        </div>
+    </nav>
+    <div class="nameandescription">
+        <form action = "form.php">
+        <input type ="text" class="name" placeholder="Title">
+        <br>
+        <textarea name="text" class="name2" cols="115" rows="1"placeholder="Description"></textarea>
+        <br>
+        </form>
+    <button id="add">Add</button>
+    </div>
+    <table id="tablee" class="table">
+        <thead>
+          <tr>
+            <th scope="col" col="2">SNO.</th>
+            <th scope="col">TASK</th>
+            <th scope="col">CONTENT</th>
+            <th scope="col">ACTION</th>
+          </tr>
+        </thead>
+      </table>
+      <script>
+      function getandupdating(){
+      console.log("updating list...");
+      let title=document.getElementsByClassName('name').value;
+      let desc=document.getElementsByClassName('name2').value;
+      console.log(title,desc);
+      if(localStorage.getItem('items')==null){
+        itemsarray.push([title,desc]);
+        itemsarray=[];
+        localStorage.setItem('items',JSON.stringify(itemsarray));
+        }
+      else{
+        itemsarraystr= localStorage.getItem('items');
+        itemsarray= JSON.parse(itemsarraystr);
+        itemsarray.push([title,desc]);
+        localStorage.setItem('items',JSON.stringify(itemsarray));
+    }
+    update();
+}
+function update(){
+    if(localStorage.getItem('items')==null){
+        itemsarray=[];
+        // itemsarray.push([title,desc]);
+        localStorage.setItem('items',JSON.stringify(itemsarray))
+    }
+    else{
+        itemsarraystr= localStorage.getItem('items')
+        itemsarray= JSON.parse(itemsarraystr);
+        // itemsarray.push([title,desc]);
+        // localStorage.setItem('itemsarray',JSON.stringify(itemsarray));
+    }   
+    let tableBody=document.getElementById("tablee");
+    let str= "";
+    itemsarray.forEach((element,index)=>{
+        str +=`
+        <tr>
+            <th scope="col" col="2">${index + 1}</th>
+            <td >${element[0]}</td>
+            <td >${element[1]}</td>
+            <td ><button class="delete" onclick="deleted(${index})">Remove</button></td>
+            </tr>`;
+        }); 
+        tableBody.innerHTML = str;
+    }
+    // console.log(JSON.stringify(itemsarray));
+    add = document.getElementById("add");
+    add.addEventListener("click",getandupdating);
+    update(); 
+    function deleted(itemIndex){
+        console.log("deleted",itemIndex);
+        itemsarraystr=localStorage.getItem('items')
+        itemsarray=JSON.parse(itemsarraystr);
+        itemsarray.splice(itemIndex,1);
+        localStorage.setItem('items',JSON.stringify(itemsarray));
+        update();
+    }
+
+      </script>
+    </body>
+</html>
